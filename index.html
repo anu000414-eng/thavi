@@ -1,0 +1,691 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Thavinhal Grama Panchayat | WebGIS</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    line-height: 1.7;
+    color: #26352c;
+    background: #f5f8f3;
+}
+
+/* Navigation */
+header {
+    background: #174d35;
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #b7e4c7;
+}
+
+/* Hero section */
+.hero {
+    min-height: 470px;
+    background:
+    linear-gradient(rgba(8, 43, 28, 0.65),
+    rgba(8, 43, 28, 0.65)),
+    url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee")
+    center/cover no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 60px 20px;
+}
+
+.hero-content {
+    max-width: 850px;
+}
+
+.hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 17px;
+    margin-bottom: 25px;
+}
+
+.hero-button {
+    display: inline-block;
+    background: #77b77d;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.hero-button:hover {
+    background: #4b9459;
+}
+
+/* Common sections */
+section {
+    padding: 65px 8%;
+}
+
+.section-title {
+    text-align: center;
+    color: #205c3d;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.section-description {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 35px;
+    color: #637168;
+}
+
+/* Introduction */
+.intro-content {
+    max-width: 1000px;
+    margin: auto;
+    text-align: justify;
+    font-size: 16px;
+}
+
+/* Geography */
+.geography {
+    background: #eaf2e9;
+}
+
+.geo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 22px;
+    margin-top: 35px;
+}
+
+.geo-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+    transition: 0.3s;
+}
+
+.geo-card:hover {
+    transform: translateY(-5px);
+}
+
+.geo-card h3 {
+    color: #267247;
+    margin-bottom: 8px;
+    font-size: 17px;
+}
+
+.geo-card p {
+    font-size: 20px;
+    font-weight: bold;
+    color: #344d3c;
+}
+
+/* Village information */
+.village-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.village-card {
+    background: white;
+    padding: 25px;
+    border-left: 5px solid #4d9660;
+    border-radius: 7px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+}
+
+/* Image gallery */
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    margin: 25px 0;
+}
+
+.gallery-item {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    display: block;
+    transition: 0.4s;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.04);
+}
+
+.gallery-caption {
+    padding: 15px;
+    font-weight: 600;
+    color: #24583b;
+    text-align: center;
+}
+
+/* WebGIS map */
+.map-section {
+    background: #eaf2e9;
+}
+
+.map-container {
+    width: 100%;
+    height: 650px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.map-link {
+    display: inline-block;
+    margin-top: 22px;
+    padding: 12px 25px;
+    background: #205c3d;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.map-link:hover {
+    background: #368451;
+}
+
+/* Official website */
+.official {
+    text-align: center;
+}
+
+.official a {
+    color: #247447;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.official a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    background: #153c2a;
+    color: white;
+    padding: 45px 8% 20px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 35px;
+}
+
+footer h3 {
+    color: #a9d6ae;
+    margin-bottom: 15px;
+}
+
+footer p {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+footer a {
+    color: #d3ebd7;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+.copyright {
+    border-top: 1px solid rgba(255,255,255,0.2);
+    text-align: center;
+    padding-top: 18px;
+    margin-top: 30px;
+    font-size: 13px;
+}
+
+/* Responsive design */
+@media (max-width: 700px) {
+    header {
+        justify-content: center;
+        text-align: center;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 12px;
+    }
+
+    section {
+        padding: 45px 6%;
+    }
+
+    .image-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-item img {
+        height: 230px;
+    }
+
+    .map-container {
+        height: 480px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<header>
+    <div class="logo">THAVINHAL PANCHAYAT</div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">Introduction</a>
+        <a href="#geography">Geography</a>
+        <a href="#villages">Villages</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#map">Interactive Map</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>Thavinhal Grama Panchayat</h1>
+
+        <p>
+            Exploring the geographical landscape, natural beauty
+            and spatial characteristics of Thavinhal,
+            Wayanad District, Kerala.
+        </p>
+
+        <a href="#map" class="hero-button">
+            Explore Interactive Map
+        </a>
+    </div>
+</section>
+
+<!-- Introduction -->
+<section id="about">
+
+    <h2 class="section-title">Introduction</h2>
+
+    <p class="section-description">
+        An overview of Thavinhal Grama Panchayat
+    </p>
+
+    <div class="intro-content">
+
+        <p>
+            Thavinhal Grama Panchayat is located in Wayanad
+            district of Kerala and comes under Mananthavady
+            Block Panchayat. It is a beautiful highland region
+            characterised by hills, valleys, plantations,
+            agricultural landscapes and rich natural vegetation.
+        </p>
+
+        <br>
+
+        <p>
+            The region has considerable geographical and
+            ecological significance due to its varied
+            landscape and natural resources. Agriculture
+            forms an important part of the local economy,
+            with plantations and traditional farming
+            activities contributing to rural livelihoods.
+        </p>
+
+        <br>
+
+        <p>
+            Thavinhal is also known for its cultural heritage,
+            tribal traditions and scenic attractions.
+            Its geographical characteristics make it an
+            interesting area for studying rural landscapes,
+            land use and local development.
+        </p>
+
+        <br>
+
+        <p>
+            This website provides geographical information
+            about Thavinhal Grama Panchayat through an
+            interactive WebGIS map, photographs and
+            descriptive information.
+        </p>
+
+    </div>
+</section>
+
+<!-- Geographical Information -->
+<section class="geography" id="geography">
+
+    <h2 class="section-title">Geographical Information</h2>
+
+    <p class="section-description">
+        Location and administrative characteristics
+        of Thavinhal Grama Panchayat
+    </p>
+
+    <div class="geo-grid">
+
+        <div class="geo-card">
+            <h3>District</h3>
+            <p>Wayanad</p>
+        </div>
+
+        <div class="geo-card">
+            <h3>Block Panchayat</h3>
+            <p>Mananthavady</p>
+        </div>
+
+        <div class="geo-card">
+            <h3>Geographical Area</h3>
+            <p>142.3 km²</p>
+        </div>
+
+        <div class="geo-card">
+            <h3>Total Population</h3>
+            <p>40,231</p>
+        </div>
+
+        <div class="geo-card">
+            <h3>Number of Wards</h3>
+            <p>23</p>
+        </div>
+
+        <div class="geo-card">
+            <h3>Villages</h3>
+            <p>3</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- Villages -->
+<section id="villages">
+
+    <h2 class="section-title">Villages Under Thavinhal Panchayat</h2>
+
+    <p class="section-description">
+        The administrative area includes the following villages.
+    </p>
+
+    <div class="village-list">
+
+        <div class="village-card">
+            <h3>01. Thavinhal</h3>
+            <p>
+                One of the constituent villages of
+                Thavinhal Grama Panchayat.
+            </p>
+        </div>
+
+        <div class="village-card">
+            <h3>02. Periya</h3>
+            <p>
+                A village located within the
+                administrative region of the panchayat.
+            </p>
+        </div>
+
+        <div class="village-card">
+            <h3>03. Valad</h3>
+            <p>
+                Another constituent village of
+                Thavinhal Grama Panchayat.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- Image Gallery -->
+<section id="gallery">
+
+    <h2 class="section-title">Image Gallery</h2>
+
+    <p class="section-description">
+        Landscapes, natural surroundings and attractions
+        of Thavinhal.
+    </p>
+
+    <div class="image-gallery">
+
+        <div class="gallery-item">
+            <img
+                src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e"
+                alt="Mountain landscape"
+                loading="lazy"
+            >
+            <div class="gallery-caption">
+                Mountain Landscape
+            </div>
+        </div>
+
+        <div class="gallery-item">
+            <img
+                src="https://images.unsplash.com/photo-1500382017468-9049fed747ef"
+                alt="Green agricultural landscape"
+                loading="lazy"
+            >
+            <div class="gallery-caption">
+                Agricultural Landscape
+            </div>
+        </div>
+
+        <div class="gallery-item">
+            <img
+                src="https://images.unsplash.com/photo-1448375240586-882707db888b"
+                alt="Forest landscape"
+                loading="lazy"
+            >
+            <div class="gallery-caption">
+                Forest and Natural Vegetation
+            </div>
+        </div>
+
+        <div class="gallery-item">
+            <img
+                src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429"
+                alt="Green valley landscape"
+                loading="lazy"
+            >
+            <div class="gallery-caption">
+                Scenic Highland Landscape
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Interactive WebGIS Map -->
+<section class="map-section" id="map">
+
+    <h2 class="section-title">Interactive WebGIS Map</h2>
+
+    <p class="section-description">
+        Explore the geographical features and spatial
+        information of Thavinhal Grama Panchayat
+        through the interactive map.
+    </p>
+
+    <div class="map-container">
+
+        <iframe
+            src="https://anu000414-eng.github.io/webgiskavis/"
+            title="Thavinhal Panchayat Interactive WebGIS Map"
+            loading="lazy"
+            allowfullscreen>
+        </iframe>
+
+    </div>
+
+    <div style="text-align:center;">
+
+        <a
+            href="https://anu000414-eng.github.io/webgiskavis/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="map-link">
+
+            Open Full Interactive Map
+
+        </a>
+
+    </div>
+
+</section>
+
+<!-- Official Website -->
+<section class="official">
+
+    <h2 class="section-title">Official Information</h2>
+
+    <p>
+        For more information about Thavinhal Grama Panchayat,
+        visit the official website.
+    </p>
+
+    <br>
+
+    <a
+        href="https://thavinhalpanchayat.lsgkerala.gov.in/en"
+        target="_blank"
+        rel="noopener noreferrer">
+
+        Thavinhal Grama Panchayat Official Website
+
+    </a>
+
+</section>
+
+<!-- Footer -->
+<footer id="contact">
+
+    <div class="footer-content">
+
+        <div>
+            <h3>About This Website</h3>
+
+            <p>
+                A geographical information website
+                presenting Thavinhal Grama Panchayat
+                through WebGIS technology.
+            </p>
+        </div>
+
+        <div>
+            <h3>Quick Links</h3>
+
+            <p><a href="#home">Home</a></p>
+            <p><a href="#about">Introduction</a></p>
+            <p><a href="#geography">Geographical Information</a></p>
+            <p><a href="#gallery">Image Gallery</a></p>
+            <p><a href="#map">Interactive Map</a></p>
+        </div>
+
+        <div>
+            <h3>Contact Information</h3>
+
+            <p><strong>Name:</strong> Anamika P</p>
+
+            <p>
+                <strong>Email:</strong>
+                <a href="mailto:anu000414@gmail.com">
+                    anu000414@gmail.com
+                </a>
+            </p>
+
+            <p>
+                <strong>Location:</strong>
+                Thavinhal, Wayanad, Kerala
+            </p>
+        </div>
+
+    </div>
+
+    <div class="copyright">
+
+        <p>
+            © 2026 Thavinhal Grama Panchayat WebGIS Project.
+            All Rights Reserved.
+        </p>
+
+        <p>
+            Designed and Developed by Anamika P
+        </p>
+
+    </div>
+
+</footer>
+
+</body>
+</html>
